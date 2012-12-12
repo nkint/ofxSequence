@@ -17,3 +17,32 @@ It is a porting in c++ of MATLAB code from Kevin Murphy, [HMM MATLAB Toolbox](ht
 
 #Addon for OpenFrameworks, uh?
 Yeah it is an addon for OpenFrameworks but it has also a dependency from [Armadillo](http://arma.sourceforge.net/): a linear algebra libray written in C++ that make life easier when you try to port some MATLAB code in C++ :-)
+
+#ISSUES  ON OS/X
+
+There are some issues on compiling Armadillo on OS/X. Armadillo is a powerfull library very optimized (it could use some highly scalable parallel computing or other black magic that i completely ignore). Due to this heavy optimization there could be some compilation problem in some platform (32 / 64 bit issues) or other stuffs.
+Please do not hesitate to open issues or write me for any kind of problem. Share the problems!
+
+##Issue "check()"
+From ofZach
+See a solution [here]( https://github.com/nkint/ofxSequence/issues/1#issuecomment-11129335 )
+
+##Issue Undefined symbols for architecture i386: "_wrapper_dgemm_"
+From ptrigueiros@gmail.com
+I'm using a Mac Book Pro with mac osx 10.7.5 and XCode 4.5.
+Solution to use ofxSequence with Armadillo library (openFrameworks)
+
+1.     Since mac osx is 64 bits, when we download and compile the source code for Amarillo it becomes 64-bits (x86_64).
+        The same happens if we try to install the library via macports.
+        Since openFrameworks is 32bits on mac the two don't work together.... :-(
+        So, the solution is to force macports to i386.... to install armadillo
+2.     Force macports to i386:
+        a) edit macports.conf:   
+            # sudo vim /opt/local/etc/macports/macports.conf
+        b) force i386 on macports: 
+            search for build_arch and uncomment that line to build_arch    i386
+        c) save macports.conf
+        d) install armadillo library
+            # sudo port install armadillo (armadillo 3.4 is the current version on my system)
+            this process will install some dependencies like boost (i386)
+3.     After this you can compile the example that comes with ofxSequence under XCode 4.5.
